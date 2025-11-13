@@ -1,8 +1,10 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+/* === Custom Dark Variant === */
 @custom-variant dark (&:is(.dark *));
 
+/* === Root Colors / Theme Variables === */
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -39,6 +41,7 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+/* === Dark Mode Colors === */
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
@@ -74,6 +77,7 @@
   --sidebar-ring: oklch(0.439 0 0);
 }
 
+/* === Font & Theme Variables === */
 @theme inline {
   --font-sans: 'Geist', 'Geist Fallback';
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
@@ -115,11 +119,33 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* === Base Styles + Mobile Optimizations === */
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    box-sizing: border-box; /* prevent layout breaking */
+  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden; /* prevent horizontal scroll */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   body {
     @apply bg-background text-foreground;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+    transition: background 0.2s, color 0.2s; /* smooth dark/light toggle */
+  }
+  img, video, canvas {
+    max-width: 100%;
+    height: auto;
+    display: block; /* responsive media */
+  }
+  .container, main, section, article, .wrapper {
+    max-width: 100%;
+    width: 100%; /* responsive containers */
   }
 }
